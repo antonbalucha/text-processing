@@ -1,0 +1,3 @@
+How to run:
+
+-start_with https://ekonomika.sme.sk/ -link_must_contains ekonomika.sme.sk -download_next true -cookie_name "COOKIE_NAME" -cookie_value "COOKIE_VALUE"
