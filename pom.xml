@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>technology.tonyb.textprocessor</groupId>
-	<artifactId>textprocessor-root</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>sk.yss.textprocessor</groupId>
+	<artifactId>text-processor-root</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Text Processor Root Maven Project</name>
-	<url>http://www.tonyb.technology</url>
+	<name>text-processor-root</name>
+	<url>http://www.yss.sk</url>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,9 +19,11 @@
 	</properties>
 	
 	<modules>
-		<module>configuration</module>
-		<module>webdownloader</module>
-		<module>textpreparation</module>
-		<module>tfidfprocessor</module>
+		<module>lib-api-classes</module>
+		<module>lib-calculator</module>
+		<module>lib-configuration</module>
+		<module>web-downloader</module>
+		<module>text-preparation</module>
+		<module>tf-idf-processor</module>
   </modules>
 </project>

@@ -19,7 +19,7 @@ I provide this project under [Apache License 2.0](https://github.com/antonbaluch
 
 ## Contact
 
-In case of any questions about Text Processing or suggestions for improvements or some feedback or whatever is in your mind about The Framework you may contact me on ```projects@tonyb.technology```.
+In case of any questions about Text Processing or suggestions for improvements or some feedback or whatever is in your mind about The Framework you may contact me on ```projects@yss.sk```.
 
 ## Keywords
 
