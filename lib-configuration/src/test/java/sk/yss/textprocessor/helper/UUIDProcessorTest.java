@@ -1,7 +1,7 @@
 package sk.yss.textprocessor.helper;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import sk.yss.textprocessor.configuration.helper.UUIDProcessor;
 
@@ -11,7 +11,7 @@ public class UUIDProcessorTest {
 	public void testGenerateUuid() {
 		String uuid = UUIDProcessor.generateUuid();
 		System.out.println(uuid);
-		Assert.assertNotNull(uuid);
+		Assertions.assertNotNull(uuid);
 	}
 
 	@Test
@@ -19,8 +19,8 @@ public class UUIDProcessorTest {
 		String uuid = UUIDProcessor.generateUuid();
 		System.out.println(uuid);
 
-		Assert.assertEquals(false, UUIDProcessor.isValidUuid(null));
-		Assert.assertEquals(false, UUIDProcessor.isValidUuid(""));
-		Assert.assertEquals(true, UUIDProcessor.isValidUuid(UUIDProcessor.generateUuid()));
+		Assertions.assertEquals(false, UUIDProcessor.isValidUuid(null));
+		Assertions.assertEquals(false, UUIDProcessor.isValidUuid(""));
+		Assertions.assertEquals(true, UUIDProcessor.isValidUuid(UUIDProcessor.generateUuid()));
 	}
 }

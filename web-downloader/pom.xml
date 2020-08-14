@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>sk.yss.textprocessor</groupId>
@@ -15,12 +16,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>sk.yss.textprocessor</groupId>
 			<artifactId>lib-api-classes</artifactId>
@@ -33,11 +33,12 @@
 			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 
-		<!-- For logging purposes is used LogBack. -->
+		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.7</version>
+			<version>1.2.3</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- jsoup HTML parser library @ https://jsoup.org/ -->
@@ -61,11 +62,11 @@
 			<version>2.5</version>
 		</dependency>
 
-		<!-- Support for MySQL 6.0 -->
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>6.0.6</version>
+			<version>8.0.21</version>
 		</dependency>
 
 		<dependency>
