@@ -6,10 +6,12 @@ Project is used for basic text processing. It can download web pages, clean text
 
 Project contains four main modules according its functionality:
 
-* configuration - contains classes for reading configuration, connection to database and some helper classes
-* textpreparation - module, which clean and prepare text
-* tfidfprocessor - module, which identify TF-IDF for each word of each downloaded text
-* webdownloader - module, which downloads web pages
+* lib-api-classes - contains shared interfaces and classes
+* lib-calculator - contains classes which provides some computations 
+* lib-configuration - contains classes for reading configuration, connection to database and some helper classes
+* text-preparation - module, which clean and prepare text
+* tf-idf-processor - module, which identify TF-IDF for each word of each downloaded text
+* web-downloader - module, which downloads web pages
 
 # In conclusion
 
@@ -19,7 +21,7 @@ I provide this project under [Apache License 2.0](https://github.com/antonbaluch
 
 ## Contact
 
-In case of any questions about Text Processing or suggestions for improvements or some feedback or whatever is in your mind about The Framework you may contact me on ```projects@yss.sk```.
+In case of any questions about Text Processing or suggestions for improvements or some feedback or whatever is in your mind about The Framework you may contact me on ```projects@tonyb.sk```.
 
 ## Keywords
 
