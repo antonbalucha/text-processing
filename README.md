@@ -9,9 +9,9 @@ Project contains four main modules according its functionality:
 * lib-api-classes - contains shared interfaces and classes
 * lib-calculator - contains classes which provides some computations 
 * lib-configuration - contains classes for reading configuration, connection to database and some helper classes
-* text-preparation - module, which clean and prepare text
-* tf-idf-processor - module, which identify TF-IDF for each word of each downloaded text
-* web-downloader - module, which downloads web pages
+* app-text-preparation - module, which clean and prepare text
+* app-tf-idf-processor - module, which identify TF-IDF for each word of each downloaded text
+* app-web-downloader - module, which downloads web pages
 
 # In conclusion
 
