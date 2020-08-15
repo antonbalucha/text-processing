@@ -11,14 +11,14 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sk.yss.textprocessor.webdownloader.RunModule;
+import sk.yss.textprocessor.webdownloader.RunWebDownloader;
 
 // https://stackoverflow.com/questions/35099509/jsoup-and-character-encoding?rq=1
 // http://stackoverflow.com/questions/5131358/access-denied-when-trying-to-get-webpage-from-a-website
 
 public final class WebDocumentDownloader {
 
-	private static final Logger logger = LoggerFactory.getLogger(RunModule.class);
+	private static final Logger logger = LoggerFactory.getLogger(RunWebDownloader.class);
 
 	private static final int CONNECTION_TIMEOUT = 10000;
 	private static final int READ_TIMEOUT = 10000;

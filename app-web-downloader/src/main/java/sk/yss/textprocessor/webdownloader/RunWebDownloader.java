@@ -18,9 +18,9 @@ import sk.yss.textprocessor.configuration.helper.DatabaseConnector;
 import sk.yss.textprocessor.configuration.helper.UUIDProcessor;
 import sk.yss.textprocessor.webdownloader.downloader.JsoupDownloader;
 
-public class RunModule {
+public class RunWebDownloader {
 
-	private static final Logger logger = LoggerFactory.getLogger(RunModule.class);
+	private static final Logger logger = LoggerFactory.getLogger(RunWebDownloader.class);
 
 	private static WebPage downloadContent(WebPage webPage, String cookieName, String cookieValue) {
 		if (webPage != null && StringUtils.isNotBlank(webPage.getUrl())) {

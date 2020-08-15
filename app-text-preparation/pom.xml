@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>sk.yss.textprocessor</groupId>
-	<artifactId>tf-idf-processor</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<artifactId>app-text-preparation</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>tf-idf-processor</name>
-	<url>https://www.yss.sk</url>
+	<name>app-text-preparation</name>
+	<url>http://www.yss.sk</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,7 +21,6 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>sk.yss.textprocessor</groupId>
 			<artifactId>lib-api-classes</artifactId>
@@ -42,7 +41,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- jsoup HTML parser library @ https://jsoup.org/ -->
+		<!-- Jsoup HTML parser library @ https://jsoup.org/ -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
@@ -76,6 +75,13 @@
 			<version>4.5.5</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.6.2</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -86,7 +92,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>sk.yss.textprocessor.RunModule</mainClass>
+							<mainClass>sk.yss.textprocessor.RunTextPreparation</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

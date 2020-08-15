@@ -22,8 +22,8 @@
 		<module>lib-api-classes</module>
 		<module>lib-calculator</module>
 		<module>lib-configuration</module>
-		<module>web-downloader</module>
-		<module>text-preparation</module>
-		<module>tf-idf-processor</module>
+		<module>app-web-downloader</module>
+		<module>app-text-preparation</module>
+		<module>app-tf-idf-processor</module>
   </modules>
 </project>
