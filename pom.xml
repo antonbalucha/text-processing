@@ -14,6 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>	
 		
+		<project.java.version>11</project.java.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
@@ -21,7 +22,7 @@
 	<modules>
 		<module>lib-api-classes</module>
 		<module>lib-calculator</module>
-		<module>lib-configuration</module>
+		<module>lib-utilities</module>
 		<module>app-web-downloader</module>
 		<module>app-text-preparation</module>
 		<module>app-tf-idf-processor</module>

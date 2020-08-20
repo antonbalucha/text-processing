@@ -19,14 +19,14 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import sk.yss.textprocessor.configuration.helper.StreamConnector;
+import sk.yss.textprocessor.utilities.connectors.StreamConnectionCloser;
 
 public class HttpsDownloader {
 
-	private static final Logger logger = LoggerFactory.getLogger(HttpsDownloader.class);
+	private static final Logger logger = LogManager.getLogger(HttpsDownloader.class);
 
 	public static String download(String urlS) {
 
@@ -39,13 +39,11 @@ public class HttpsDownloader {
 			}
 
 			@Override
-			public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
-					throws CertificateException {
+			public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
 			}
 
 			@Override
-			public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
-					throws CertificateException {
+			public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
 			}
 		} };
 
@@ -94,9 +92,9 @@ public class HttpsDownloader {
 		} catch (IOException e) {
 			logger.error("IOException: " + e.getMessage(), e);
 		} finally {
-			StreamConnector.close(br);
-			StreamConnector.close(r);
-			StreamConnector.close(is);
+			StreamConnectionCloser.close(br);
+			StreamConnectionCloser.close(r);
+			StreamConnectionCloser.close(is);
 			br = null;
 			r = null;
 			is = null;

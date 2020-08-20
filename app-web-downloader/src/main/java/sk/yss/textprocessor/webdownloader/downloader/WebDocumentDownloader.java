@@ -8,8 +8,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import sk.yss.textprocessor.webdownloader.RunWebDownloader;
 
@@ -18,7 +18,7 @@ import sk.yss.textprocessor.webdownloader.RunWebDownloader;
 
 public final class WebDocumentDownloader {
 
-	private static final Logger logger = LoggerFactory.getLogger(RunWebDownloader.class);
+	private static final Logger logger = LogManager.getLogger(RunWebDownloader.class);
 
 	private static final int CONNECTION_TIMEOUT = 10000;
 	private static final int READ_TIMEOUT = 10000;

@@ -1,4 +1,4 @@
-package sk.yss.textprocessor.configuration.helper;
+package sk.yss.textprocessor.utilities;
 
 public class OSIdentifier {
 

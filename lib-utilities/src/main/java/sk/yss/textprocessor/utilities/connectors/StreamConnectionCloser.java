@@ -1,17 +1,17 @@
-package sk.yss.textprocessor.configuration.helper;
+package sk.yss.textprocessor.utilities.connectors;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class StreamConnector {
+public class StreamConnectionCloser {
 
-	private static final Logger logger = LoggerFactory.getLogger(StreamConnector.class);
-	
+	private static final Logger logger = LogManager.getLogger(StreamConnectionCloser.class);
+
 	public static void close(BufferedReader br) {
 		if (br != null) {
 			try {
@@ -35,7 +35,7 @@ public class StreamConnector {
 			}
 		}
 	}
-	
+
 	public static void close(InputStream is) {
 		if (is != null) {
 			try {

@@ -5,15 +5,15 @@ import sk.yss.textprocessor.calculator.TfIdfProcessor;
 public class TfIdf {
 
 	private int numberOfAllDocuments;
-	
+
 	private int numberOfDocumentsWithWord;
 
 	private int numberOfWordsInExaminedDocument;
-	
+
 	private int numberOfWordOccurencesInDocument;
-	
+
 	private double tfidf;
-	
+
 	public int getNumberOfAllDocuments() {
 		return this.numberOfAllDocuments;
 	}
@@ -49,16 +49,13 @@ public class TfIdf {
 		this.numberOfWordOccurencesInDocument = numberOfWordOccurencesInDocument;
 		return this;
 	}
-	
+
 	public TfIdf countTfIdf() {
-		this.tfidf = TfIdfProcessor.countTFIDF(
-				this.numberOfWordOccurencesInDocument,
-				this.numberOfWordsInExaminedDocument, 
-				this.numberOfAllDocuments,
+		this.tfidf = TfIdfProcessor.countTFIDF(this.numberOfWordOccurencesInDocument, this.numberOfWordsInExaminedDocument, this.numberOfAllDocuments,
 				this.numberOfDocumentsWithWord);
 		return this;
 	}
-	
+
 	public double getTfIdf() {
 		return this.tfidf;
 	}

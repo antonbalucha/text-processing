@@ -1,29 +1,30 @@
 package sk.yss.textprocessor.webdownloader;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import sk.yss.textprocessor.apiclasses.WebPage;
-import sk.yss.textprocessor.configuration.helper.DatabaseConnector;
-import sk.yss.textprocessor.configuration.helper.UUIDProcessor;
+import sk.yss.textprocessor.utilities.UUIDProcessor;
+import sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser;
 import sk.yss.textprocessor.webdownloader.downloader.JsoupDownloader;
 
 public class RunWebDownloader {
 
-	private static final Logger logger = LoggerFactory.getLogger(RunWebDownloader.class);
+	private static final Logger logger = LogManager.getLogger(RunWebDownloader.class);
 
 	private static WebPage downloadContent(WebPage webPage, String cookieName, String cookieValue) {
-		if (webPage != null && StringUtils.isNotBlank(webPage.getUrl())) {
+		if (webPage != null && isNotBlank(webPage.getUrl())) {
 			return webPage.setContent(JsoupDownloader.download(webPage.getUrl(), cookieName, cookieValue));
 			// content = new WebDocumentDownloader().download(url).getHtmlContent();
 			// return webPage.setContent(HttpsDownloader.download(webPage.getUrl()));
@@ -35,7 +36,7 @@ public class RunWebDownloader {
 
 	private static WebPage identifyLinks(WebPage webPage, String linkMustContains) {
 
-		if (webPage != null && StringUtils.isNotBlank(webPage.getContent()) && StringUtils.isNotBlank(linkMustContains)) {
+		if (webPage != null && isNotBlank(webPage.getContent()) && isNotBlank(linkMustContains)) {
 
 			Document parse = Jsoup.parse(webPage.getContent());
 			Elements elements = parse.getElementsByTag("a");
@@ -45,7 +46,7 @@ public class RunWebDownloader {
 				String link = element.attr("href");
 				logger.debug("Identified link: " + link);
 
-				if (StringUtils.isNotBlank(link) && !link.startsWith("whatsapp:") && !link.startsWith("javascript:") && !link.startsWith("#")) {
+				if (isNotBlank(link) && !link.startsWith("whatsapp:") && !link.startsWith("javascript:") && !link.startsWith("#")) {
 
 					if (link.startsWith("//")) {
 						try {
@@ -102,7 +103,7 @@ public class RunWebDownloader {
 			downloadNext(linkMustContains, cookieName, cookieValue);
 		}
 
-		DatabaseConnector.youMayClose();
+		DatabaseConnectionCloser.youMayClose();
 		return uuid;
 	}
 
@@ -123,7 +124,7 @@ public class RunWebDownloader {
 		while (true) {
 			WebPage wp = Database.selectUrl(linkMustContains);
 
-			if (wp != null && StringUtils.isNotBlank(wp.getUrl())) {
+			if (wp != null && isNotBlank(wp.getUrl())) {
 				wp = downloadContent(wp, cookieName, cookieValue);
 				wp = identifyLinks(wp, linkMustContains);
 
@@ -144,8 +145,8 @@ public class RunWebDownloader {
 		String uuid = null;
 
 		try {
-			if (args != null && args[0].equals("-start_with") && StringUtils.isNotBlank(args[1]) && args[2].equals("-link_must_contains")
-					&& StringUtils.isNotBlank(args[3]) && args[4].equals("-download_next") && StringUtils.isNotBlank(args[5])) {
+			if (args != null && args[0].equals("-start_with") && isNotBlank(args[1]) && args[2].equals("-link_must_contains") && isNotBlank(args[3])
+					&& args[4].equals("-download_next") && isNotBlank(args[5])) {
 				logger.info("Valid number of parameters. Entered start url '" + args[1] + "' with condition '" + args[3] + "' will be processed.");
 				uuid = process(args[1].trim(), args[3].trim(), new Boolean(args[5].trim()), args[7].trim(), args[9].trim());
 			} else {
@@ -155,8 +156,8 @@ public class RunWebDownloader {
 		} catch (Throwable e) {
 			logger.error("Throwable: " + e.getMessage(), e);
 		} finally {
-			DatabaseConnector.youMayClose();
-			System.out.println(StringUtils.isNotBlank(uuid) ? uuid : "error");
+			DatabaseConnectionCloser.youMayClose();
+			System.out.println(isNotBlank(uuid) ? uuid : "error");
 		}
 	}
 }

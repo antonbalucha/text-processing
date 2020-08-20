@@ -5,21 +5,21 @@ import java.util.List;
 public class WebPage {
 
 	private String uuid;
-	
+
 	private String url;
-	
+
 	private String content;
 
 	private List<Word> words;
-	
+
 	private String language;
-	
+
 	public List<String> links;
-	
+
 	public String getUuid() {
 		return this.uuid;
 	}
-	
+
 	public WebPage setUuid(String uuid) {
 		this.uuid = uuid;
 		return this;
@@ -42,7 +42,7 @@ public class WebPage {
 		if (content == null) {
 			content = "<html><head></head><body></body</html>";
 		}
-		
+
 		this.content = content;
 		return this;
 	}
@@ -64,7 +64,7 @@ public class WebPage {
 		this.language = language;
 		return this;
 	}
-	
+
 	public List<String> getLinks() {
 		return this.links;
 	}

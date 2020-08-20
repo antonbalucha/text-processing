@@ -1,44 +1,45 @@
 package sk.yss.textprocessor.tptagremoval;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import sk.yss.textprocessor.configuration.helper.DatabaseConnector;
+import sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser;
 
 public class Database {
 
-	private static final Logger logger = LoggerFactory.getLogger(Database.class);
-	
+	private static final Logger logger = LogManager.getLogger(Database.class);
+
 	public static String selectContent(String uuid) {
-		
-		if (StringUtils.isNotBlank(uuid)) {
+
+		if (isNotBlank(uuid)) {
 			logger.info("Content identified by uuid='" + uuid + " will be selected from database.");
-			
-			Connection connection = DatabaseConnector.getConnection();
+
+			Connection connection = DatabaseConnectionCloser.getConnection();
 			PreparedStatement ps = null;
 			ResultSet rs = null;
-			
+
 			String content = null;
-			
+
 			try {
 				ps = connection.prepareStatement("SELECT content FROM web_pages WHERE uuid = ?");
 				ps.setString(1, uuid);
 				rs = ps.executeQuery();
-				
+
 				if (rs != null && rs.next()) {
 					content = rs.getString(1);
 				}
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnector.close(rs);
-				DatabaseConnector.close(ps);
+				DatabaseConnectionCloser.close(rs);
+				DatabaseConnectionCloser.close(ps);
 			}
 
 			logger.info("Content identified by uuid='" + uuid + "' was selected from database.");
@@ -50,21 +51,21 @@ public class Database {
 			return null;
 		}
 	}
-	
+
 	public static void insertRemovedTags(String uuid, String removedTags) {
-		
-		if (StringUtils.isNotBlank(uuid) && StringUtils.isNotBlank(removedTags)) {
+
+		if (isNotBlank(uuid) && isNotBlank(removedTags)) {
 			logger.info("Content with removed tags of record with uuid='" + uuid + "' will be inserted to database.");
-			
-			Connection connection = DatabaseConnector.getConnection();
+
+			Connection connection = DatabaseConnectionCloser.getConnection();
 			PreparedStatement ps = null;
-			
+
 			try {
 				ps = connection.prepareStatement("UPDATE web_pages SET removed_tags = ? WHERE uuid = ?");
 				ps.setString(1, removedTags);
 				ps.setString(2, uuid);
 				int numberOfUpdatedRecords = ps.executeUpdate();
-				
+
 				if (numberOfUpdatedRecords == 1) {
 					logger.info("Content with removed tags of record with uuid='" + uuid + "' was inserted to database.");
 				} else {
@@ -73,7 +74,7 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnector.close(ps);
+				DatabaseConnectionCloser.close(ps);
 			}
 		} else {
 			logger.error("One of parameters uuid or content is null or empty!");

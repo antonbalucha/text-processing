@@ -1,4 +1,7 @@
-package sk.yss.textprocessor.helper;
+package sk.yss.textprocessor.utilities;
+
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser.close;
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser.getConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,27 +9,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import sk.yss.textprocessor.configuration.helper.DatabaseConnector;
 
 public class DatabaseConnectorTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(DatabaseConnectorTest.class);
+	private static final Logger logger = LogManager.getLogger(DatabaseConnectorTest.class);
 
 	@Test
 	public void testConnection() {
-		Connection connection = DatabaseConnector.getConnection();
+		Connection connection = getConnection();
 		Assertions.assertNotNull(connection);
-		DatabaseConnector.close(connection);
+		close(connection);
 	}
 
 	@Test
 	public void testInsert() {
-		Connection connection = DatabaseConnector.getConnection();
+		Connection connection = getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -46,9 +47,9 @@ public class DatabaseConnectorTest {
 		} catch (SQLException e) {
 			logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 		} finally {
-			DatabaseConnector.close(rs);
-			DatabaseConnector.close(ps);
-			DatabaseConnector.close(connection);
+			close(rs);
+			close(ps);
+			close(connection);
 		}
 	}
 }

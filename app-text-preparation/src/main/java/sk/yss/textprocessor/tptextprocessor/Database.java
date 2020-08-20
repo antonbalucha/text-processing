@@ -1,28 +1,29 @@
 package sk.yss.textprocessor.tptextprocessor;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import sk.yss.textprocessor.apiclasses.Word;
-import sk.yss.textprocessor.configuration.helper.DatabaseConnector;
+import sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser;
 
 public class Database {
 
-	private static final Logger logger = LoggerFactory.getLogger(Database.class);
+	private static final Logger logger = LogManager.getLogger(Database.class);
 
 	public static String selectTextWithRemovedTags(String uuid) {
 
-		if (StringUtils.isNotBlank(uuid)) {
+		if (isNotBlank(uuid)) {
 			logger.info("Text with removed tags identified by uuid='" + uuid + "' will be selected from database.");
 
-			Connection connection = DatabaseConnector.getConnection();
+			Connection connection = DatabaseConnectionCloser.getConnection();
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 
@@ -39,8 +40,8 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnector.close(rs);
-				DatabaseConnector.close(ps);
+				DatabaseConnectionCloser.close(rs);
+				DatabaseConnectionCloser.close(ps);
 			}
 
 			logger.info("Content identified by uuid='" + uuid + "' was selected from database.");
@@ -55,10 +56,10 @@ public class Database {
 
 	public static void updateLanguage(String uuid, String language) {
 
-		if (StringUtils.isNotBlank(uuid) && StringUtils.isNotBlank(language)) {
+		if (isNotBlank(uuid) && isNotBlank(language)) {
 			logger.debug("Information about language '" + language + "' for uuid='" + uuid + "' will be inserted to database.");
 
-			Connection connection = DatabaseConnector.getConnection();
+			Connection connection = DatabaseConnectionCloser.getConnection();
 			PreparedStatement ps = null;
 
 			try {
@@ -75,7 +76,7 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnector.close(ps);
+				DatabaseConnectionCloser.close(ps);
 			}
 		} else {
 			logger.error("Entered uuid or language is null or empty!");
@@ -84,11 +85,11 @@ public class Database {
 
 	public static void updateNumberOfWordsInText(String uuid, List<Word> words) {
 
-		if (StringUtils.isNotBlank(uuid) && words != null && words.size() > 0) {
+		if (isNotBlank(uuid) && words != null && words.size() > 0) {
 
 			logger.debug("Information about number of words in text with value '" + words.size() + "' for uuid='" + uuid + "' will be inserted to database.");
 
-			Connection connection = DatabaseConnector.getConnection();
+			Connection connection = DatabaseConnectionCloser.getConnection();
 			PreparedStatement ps = null;
 
 			try {
@@ -105,7 +106,7 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnector.close(ps);
+				DatabaseConnectionCloser.close(ps);
 			}
 		} else {
 			logger.error("Entered uuid is null or empty or numberOfWordsInText is lower than 0!");
@@ -114,15 +115,16 @@ public class Database {
 
 	public static void insertWords(String uuid, List<Word> words) {
 
-		if (StringUtils.isNotBlank(uuid) && words != null && words.size() > 0) {
+		if (isNotBlank(uuid) && words != null && words.size() > 0) {
 			logger.debug("Processed words for uuid='" + uuid + "' will be inserted to database.");
 
-			Connection connection = DatabaseConnector.getConnection();
+			Connection connection = DatabaseConnectionCloser.getConnection();
 			PreparedStatement ps = null;
 
 			try {
 				for (int i = 0; i < words.size(); i++) {
-					ps = connection.prepareStatement("INSERT INTO words (uuid, word, word_lower_case, word_lower_case_no_diacritics, stemmed_word_lower_case, stemmed_word_lower_case_no_diacritics, number_of_word_occurences_in_text, term_frequency, tfidf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					ps = connection.prepareStatement(
+							"INSERT INTO words (uuid, word, word_lower_case, word_lower_case_no_diacritics, stemmed_word_lower_case, stemmed_word_lower_case_no_diacritics, number_of_word_occurences_in_text, term_frequency, tfidf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					ps.setString(1, uuid);
 					ps.setString(2, words.get(i).getWord());
 					ps.setString(3, words.get(i).getWordLowerCase());
@@ -137,7 +139,7 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnector.close(ps);
+				DatabaseConnectionCloser.close(ps);
 			}
 		} else {
 			logger.error("Entered uuid or list of words is null or empty!");

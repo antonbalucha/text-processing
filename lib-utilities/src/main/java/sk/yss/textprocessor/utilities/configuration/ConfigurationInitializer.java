@@ -1,4 +1,6 @@
-package sk.yss.textprocessor.configuration;
+package sk.yss.textprocessor.utilities.configuration;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.FileBasedConfiguration;
@@ -7,18 +9,17 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.builder.fluent.PropertiesBuilderParameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import sk.yss.textprocessor.configuration.helper.OSIdentifier;
+import sk.yss.textprocessor.utilities.OSIdentifier;
 
 /**
  * Class contains methods used for initialization of configuration loader. <br>
  */
 public class ConfigurationInitializer {
 
-	private static final Logger logger = LoggerFactory.getLogger(ConfigurationInitializer.class);
+	private static final Logger logger = LogManager.getLogger(ConfigurationInitializer.class);
 
 	public static final String UTF_8 = "UTF-8";
 
@@ -58,10 +59,10 @@ public class ConfigurationInitializer {
 	}
 
 	static final String loadAsString(String propertyName) {
-		return StringUtils.isBlank(propertyName) ? null : config.getString(PROPERTY_PREFIX + "." + propertyName, null);
+		return isBlank(propertyName) ? null : config.getString(PROPERTY_PREFIX + "." + propertyName, null);
 	}
 
 	static final Integer loadAsInteger(String propertyName) {
-		return StringUtils.isBlank(propertyName) ? null : config.getInteger(PROPERTY_PREFIX + "." + propertyName, null);
+		return isBlank(propertyName) ? null : config.getInteger(PROPERTY_PREFIX + "." + propertyName, null);
 	}
 }

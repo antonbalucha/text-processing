@@ -1,69 +1,70 @@
 package sk.yss.textprocessor.tptagremoval;
 
-import org.apache.commons.lang3.StringUtils;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RunTpTagRemoval {
-	
-	private static final Logger logger = LoggerFactory.getLogger(RunTpTagRemoval.class);
-	
-	/** 
-	 * This method add redundant space and fixes situation when many tags is joined together without any space and tag removal 
-	 * remove tags and text will be also joined together which is not desired state. 
+
+	private static final Logger logger = LogManager.getLogger(RunTpTagRemoval.class);
+
+	/**
+	 * This method add redundant space and fixes situation when many tags is joined together without any space and tag removal
+	 * remove tags and text will be also joined together which is not desired state.
 	 */
 	private static String addSpaceToLink(String content) {
-		if (StringUtils.isNotBlank(content)) {
+		if (isNotBlank(content)) {
 			return content.replaceAll("</", " </");
 		} else {
 			logger.error("Entered content of adding spaces after link is null or empty!");
 			return null;
 		}
 	}
-	
+
 	private static String removeTags(String content) {
-		
-		if (StringUtils.isNotBlank(content)) {
+
+		if (isNotBlank(content)) {
 			Document document = Jsoup.parse(content, "UTF-8");
-			
+
 			// Remove all script and style elements and those of class "hidden".
 			document.select("script, style, .hidden, noscript").remove();
-			
+
 			// Remove all style and event-handler attributes from all elements.
 			Elements all = document.select("*");
-			
-			for (Element el : all) { 
-			  for (Attribute attribute : el.attributes()) { 
-			    String attributeKey = attribute.getKey();
-			    if (attributeKey.equals("style") || attributeKey.startsWith("on")) { 
-			      el.removeAttr(attributeKey);
-			    } 
-			  }
+
+			for (Element el : all) {
+				for (Attribute attribute : el.attributes()) {
+					String attributeKey = attribute.getKey();
+					if (attributeKey.equals("style") || attributeKey.startsWith("on")) {
+						el.removeAttr(attributeKey);
+					}
+				}
 			}
-			
+
 			return document.text();
 		} else {
 			logger.error("Entered content is null or empty!");
 			return null;
 		}
 	}
-	
+
 	private static void process(String uuid) {
 		Database.insertRemovedTags(uuid, removeTags(addSpaceToLink(Database.selectContent(uuid))));
 	}
-	
+
 	public static void run(String uuid) {
 		process(uuid);
 	}
-	
+
 	public static void main(String[] args) {
-		
-		if (args != null && args.length == 2 && args[0].equals("-uuid") && StringUtils.isNotBlank(args[1])) {
+
+		if (args != null && args.length == 2 && args[0].equals("-uuid") && isNotBlank(args[1])) {
 			logger.info("Valid number of parameters. Entered record with uuid '" + args[1] + "' will be processed.");
 			run(args[1]);
 		} else {

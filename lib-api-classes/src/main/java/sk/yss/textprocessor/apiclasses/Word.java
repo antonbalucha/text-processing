@@ -22,7 +22,8 @@ public class Word {
 
 	private double tfIdf = 0.0d;
 
-	public Word() {}
+	public Word() {
+	}
 
 	public Word(String word) {
 		this.word = word;

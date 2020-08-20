@@ -1,9 +1,7 @@
-package sk.yss.textprocessor.helper;
+package sk.yss.textprocessor.utilities;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import sk.yss.textprocessor.configuration.helper.UUIDProcessor;
 
 public class UUIDProcessorTest {
 

@@ -11,15 +11,15 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class InstallAllTrustingCertificates {
 
-	private static final Logger logger = LoggerFactory.getLogger(InstallAllTrustingCertificates.class);
-	
+	private static final Logger logger = LogManager.getLogger(InstallAllTrustingCertificates.class);
+
 	public static void install() {
-		
+
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
 
@@ -29,22 +29,24 @@ public class InstallAllTrustingCertificates {
 			}
 
 			@Override
-			public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {}
+			public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+			}
 
 			@Override
-			public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {}
-		}};
-		
+			public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+			}
+		} };
+
 		// Create all-trusting host name verifier
 		HostnameVerifier allHostsValid = new HostnameVerifier() {
 			public boolean verify(String hostname, SSLSession session) {
 				return true;
 			}
 		};
-		
+
 		// Install the all-trusting host verifier
 		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-		
+
 		// Install the all-trusting trust manager
 		try {
 			SSLContext sc = SSLContext.getInstance("TLS");

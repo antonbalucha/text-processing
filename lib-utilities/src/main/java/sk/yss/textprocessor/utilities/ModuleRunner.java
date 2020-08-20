@@ -1,26 +1,27 @@
-package sk.yss.textprocessor.configuration.helper;
+package sk.yss.textprocessor.utilities;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import sk.yss.textprocessor.configuration.ConfigurationReader;
+import sk.yss.textprocessor.utilities.configuration.ConfigurationReader;
 
 public class ModuleRunner {
 
-	private static final Logger logger = LoggerFactory.getLogger(ModuleRunner.class);
-	
+	private static final Logger logger = LogManager.getLogger(ModuleRunner.class);
+
 	public static void callNextModule(String moduleStartupKey, String parameter) {
-		
+
 		String nextModuleStartupCmd = ConfigurationReader.getPropertyAsString(moduleStartupKey);
-		
-		if (StringUtils.isNotBlank(nextModuleStartupCmd)) {
-			
+
+		if (isNotBlank(nextModuleStartupCmd)) {
+
 			nextModuleStartupCmd = String.format(nextModuleStartupCmd, parameter);
 			logger.info("Next module will be called by command='" + nextModuleStartupCmd + "'");
-			
+
 			try {
 				Runtime.getRuntime().exec(nextModuleStartupCmd);
 			} catch (IOException e) {
