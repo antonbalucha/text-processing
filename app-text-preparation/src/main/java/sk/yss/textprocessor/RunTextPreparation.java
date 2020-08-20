@@ -1,11 +1,12 @@
 package sk.yss.textprocessor;
 
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnector.youMayClose;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import sk.yss.textprocessor.tptagremoval.RunTpTagRemoval;
 import sk.yss.textprocessor.tptextprocessor.RunTpTextProcessor;
-import sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser;
 
 public class RunTextPreparation {
 
@@ -33,7 +34,7 @@ public class RunTextPreparation {
 		} catch (Throwable e) {
 			logger.error("Throwable: " + e.getMessage(), e);
 		} finally {
-			DatabaseConnectionCloser.youMayClose();
+			youMayClose();
 		}
 	}
 }

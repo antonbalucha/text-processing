@@ -1,5 +1,7 @@
 package sk.yss.textprocessor.webdownloader;
 
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnector.getConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +21,7 @@ public class Database {
 
 	public static WebPage selectUrl(String linkMustContains) {
 
-		Connection connection = DatabaseConnectionCloser.getConnection();
+		Connection connection = getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -51,7 +53,7 @@ public class Database {
 
 			logger.debug("Content of web page with uuid='" + wp.getUuid() + "' will be inserted to database.");
 
-			Connection connection = DatabaseConnectionCloser.getConnection();
+			Connection connection = getConnection();
 			PreparedStatement ps = null;
 
 			String uuid = null;
@@ -92,7 +94,7 @@ public class Database {
 
 			logger.debug("Content of web page with uuid='" + wp.getUuid() + "' will be updated in database.");
 
-			Connection connection = DatabaseConnectionCloser.getConnection();
+			Connection connection = getConnection();
 			PreparedStatement ps = null;
 
 			try {
@@ -122,7 +124,7 @@ public class Database {
 
 			logger.debug("Links of web page with uuid='" + wp.getUuid() + "' will be inserted to database.");
 
-			Connection connection = DatabaseConnectionCloser.getConnection();
+			Connection connection = getConnection();
 			PreparedStatement ps = null;
 
 			try {

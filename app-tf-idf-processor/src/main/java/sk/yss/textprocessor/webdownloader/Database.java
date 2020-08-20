@@ -1,5 +1,8 @@
 package sk.yss.textprocessor.webdownloader;
 
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser.close;
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnector.getConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import sk.yss.textprocessor.apiclasses.TfIdf;
 import sk.yss.textprocessor.apiclasses.Word;
-import sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser;
 
 public class Database {
 
@@ -31,7 +33,7 @@ public class Database {
 
 	public static void selectWordMetadata() {
 
-		Connection connection = DatabaseConnectionCloser.getConnection();
+		Connection connection = getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -48,8 +50,8 @@ public class Database {
 		} catch (SQLException e) {
 			logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 		} finally {
-			DatabaseConnectionCloser.close(rs);
-			DatabaseConnectionCloser.close(ps);
+			close(rs);
+			close(ps);
 			rs = null;
 			ps = null;
 			connection = null;
@@ -59,7 +61,7 @@ public class Database {
 	/** Unfortunately, not working as expected. RAND() in MySQL is not random enough. */
 	public static Word selectRandomWord() {
 
-		Connection connection = DatabaseConnectionCloser.getConnection();
+		Connection connection = getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -82,8 +84,8 @@ public class Database {
 		} catch (SQLException e) {
 			logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 		} finally {
-			DatabaseConnectionCloser.close(rs);
-			DatabaseConnectionCloser.close(ps);
+			close(rs);
+			close(ps);
 			rs = null;
 			ps = null;
 			connection = null;
@@ -96,7 +98,7 @@ public class Database {
 
 	public static Word selectWord(int id) {
 
-		Connection connection = DatabaseConnectionCloser.getConnection();
+		Connection connection = getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -122,8 +124,8 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnectionCloser.close(rs);
-				DatabaseConnectionCloser.close(ps);
+				close(rs);
+				close(ps);
 				rs = null;
 				ps = null;
 				connection = null;
@@ -141,7 +143,7 @@ public class Database {
 
 			logger.debug("Information based on word='" + word.toString() + "' will be selected from database.");
 
-			Connection connection = DatabaseConnectionCloser.getConnection();
+			Connection connection = getConnection();
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 
@@ -171,8 +173,8 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnectionCloser.close(rs);
-				DatabaseConnectionCloser.close(ps);
+				close(rs);
+				close(ps);
 				// DatabaseConnector.close(connection);
 				rs = null;
 				ps = null;
@@ -192,7 +194,7 @@ public class Database {
 
 			logger.debug("Information about tfidf='" + word.getTfIdf() + "' of word '" + word.toString() + "' will be inserted to database.");
 
-			Connection connection = DatabaseConnectionCloser.getConnection();
+			Connection connection = getConnection();
 			PreparedStatement ps = null;
 
 			try {
@@ -212,7 +214,7 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnectionCloser.close(ps);
+				close(ps);
 				// DatabaseConnector.close(connection);
 				ps = null;
 				connection = null;

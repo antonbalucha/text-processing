@@ -1,6 +1,8 @@
 package sk.yss.textprocessor.tptagremoval;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser.close;
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnector.getConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +11,6 @@ import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser;
 
 public class Database {
 
@@ -21,7 +21,7 @@ public class Database {
 		if (isNotBlank(uuid)) {
 			logger.info("Content identified by uuid='" + uuid + " will be selected from database.");
 
-			Connection connection = DatabaseConnectionCloser.getConnection();
+			Connection connection = getConnection();
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 
@@ -38,8 +38,8 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnectionCloser.close(rs);
-				DatabaseConnectionCloser.close(ps);
+				close(rs);
+				close(ps);
 			}
 
 			logger.info("Content identified by uuid='" + uuid + "' was selected from database.");
@@ -57,7 +57,7 @@ public class Database {
 		if (isNotBlank(uuid) && isNotBlank(removedTags)) {
 			logger.info("Content with removed tags of record with uuid='" + uuid + "' will be inserted to database.");
 
-			Connection connection = DatabaseConnectionCloser.getConnection();
+			Connection connection = getConnection();
 			PreparedStatement ps = null;
 
 			try {
@@ -74,7 +74,7 @@ public class Database {
 			} catch (SQLException e) {
 				logger.error("SQLException: " + e.getMessage() + "; SQL state='" + e.getSQLState() + "'", e);
 			} finally {
-				DatabaseConnectionCloser.close(ps);
+				close(ps);
 			}
 		} else {
 			logger.error("One of parameters uuid or content is null or empty!");

@@ -1,7 +1,7 @@
 package sk.yss.textprocessor.utilities;
 
 import static sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser.close;
-import static sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser.getConnection;
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnector.getConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

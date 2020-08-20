@@ -1,6 +1,7 @@
 package sk.yss.textprocessor.webdownloader;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnector.youMayClose;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,7 +17,6 @@ import org.jsoup.select.Elements;
 
 import sk.yss.textprocessor.apiclasses.WebPage;
 import sk.yss.textprocessor.utilities.UUIDProcessor;
-import sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser;
 import sk.yss.textprocessor.webdownloader.downloader.JsoupDownloader;
 
 public class RunWebDownloader {
@@ -103,7 +103,7 @@ public class RunWebDownloader {
 			downloadNext(linkMustContains, cookieName, cookieValue);
 		}
 
-		DatabaseConnectionCloser.youMayClose();
+		youMayClose();
 		return uuid;
 	}
 
@@ -156,7 +156,7 @@ public class RunWebDownloader {
 		} catch (Throwable e) {
 			logger.error("Throwable: " + e.getMessage(), e);
 		} finally {
-			DatabaseConnectionCloser.youMayClose();
+			youMayClose();
 			System.out.println(isNotBlank(uuid) ? uuid : "error");
 		}
 	}

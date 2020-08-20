@@ -1,5 +1,7 @@
 package sk.yss.textprocessor.webdownloader;
 
+import static sk.yss.textprocessor.utilities.connectors.DatabaseConnector.youMayClose;
+
 import java.security.SecureRandom;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 import sk.yss.textprocessor.apiclasses.TfIdf;
 import sk.yss.textprocessor.apiclasses.Word;
-import sk.yss.textprocessor.utilities.connectors.DatabaseConnectionCloser;
 
 public class RunTfIdfProcessor {
 
@@ -76,7 +77,7 @@ public class RunTfIdfProcessor {
 		} catch (Throwable e) {
 			logger.error("Throwable: " + e.getMessage(), e);
 		} finally {
-			DatabaseConnectionCloser.youMayClose();
+			youMayClose();
 		}
 	}
 }
